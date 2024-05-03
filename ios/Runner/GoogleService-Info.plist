@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>294198838372-8vfs87s60bcuaoeetsf8fggctukhmtsk.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.294198838372-8vfs87s60bcuaoeetsf8fggctukhmtsk</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>294198838372-hurk0n2praccgpb87djc03cmp6k3rg2c.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDBuTuaFOQjUlNmyi_pp4eiQFPGGzQx9OQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>294198838372</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.dhanushe.lectifai</string>
+	<key>PROJECT_ID</key>
+	<string>lectfai</string>
+	<key>STORAGE_BUCKET</key>
+	<string>lectfai.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:294198838372:ios:62e3c0c7d83a65c69b0b71</string>
+</dict>
+</plist>
