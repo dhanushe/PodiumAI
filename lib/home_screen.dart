@@ -21,6 +21,7 @@ import 'package:lectifaisubmission/speech_recognition_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required, this.accountWasJustCreated})
@@ -87,9 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Choose your role'),
-              content: Text(
-                  'Are you a student or a teacher? This will help us tailor your experience.'),
+              title: Text('Welcome to Podium'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Are you a student or a teacher? This will help us tailor your experience.',
+                  ),
+                ],
+              ),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -103,6 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       getUserTranscripts('student');
                       isStudent = 'student';
                     });
+
+                    seeDemoDialog();
                   },
                   child: Text('Student'),
                 ),
@@ -117,6 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       getUserTranscripts('teacher');
                       isStudent = 'teacher';
                     });
+
+                    seeDemoDialog();
                   },
                   child: Text('Teacher'),
                 ),
@@ -126,6 +137,42 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       }
     });
+  }
+
+  seeDemoDialog() {
+    // Show a popup asking users to see a demo on youtube
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // first name of the user
+          title: Text('Welcome ${firebaseAuth.currentUser!.displayName}'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Would you like to see a demo on how to use Podium on Youtube?',
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('No, I will try it out!'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                launchUrl(Uri.parse('https://youtu.be/Qd5uHBhHZqg'));
+              },
+              child: Text('Yes, show me!'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   getUserTranscripts(String isStudent) async {
