@@ -453,42 +453,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 transcriptList(),
               ],
             ),
-            Positioned(
-              top: 10.0, // Adjust these values for desired position
-              right: 10.0,
-              child: Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.end, // Align the row to the right
-                children: [
-                  IconButton(
-                    color: kPrimaryLight,
-                    icon: Icon(
-                        FeatherIcons.settings), // Icon for the settings button
-                    onPressed: () {
-                      // Navigate to the settings screen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SettingsScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    color: kPrimaryLight,
-                    icon: Icon(FeatherIcons.logOut),
-                    onPressed: () {
-                      var provider = Provider.of<GoogleSignInProvider>(context,
-                          listen: false);
-                      provider.logout();
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.end, // Align the row to the right
+              children: [
+                IconButton(
+                  color: kPrimaryLight,
+                  icon: Icon(
+                    FeatherIcons.settings,
+                  ), // Icon for the settings button
+                  onPressed: () {
+                    // Navigate to the settings screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SettingsScreen(),
+                      ),
+                    );
+                  },
+                ),
+                IconButton(
+                  color: kPrimaryLight,
+                  icon: Icon(FeatherIcons.logOut),
+                  onPressed: () {
+                    var provider = Provider.of<GoogleSignInProvider>(context,
+                        listen: false);
+                    provider.logout();
 
-                      HelperFunctions.saveUserLoggedIn(false);
-                      HelperFunctions.saveUserEmail('');
-                      HelperFunctions.saveUserName('');
-                    },
-                  ),
-                ],
-              ),
+                    HelperFunctions.saveUserLoggedIn(false);
+                    HelperFunctions.saveUserEmail('');
+                    HelperFunctions.saveUserName('');
+                  },
+                ),
+              ],
             )
           ],
         ),
