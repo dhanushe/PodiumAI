@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lectifaisubmission/default_firebase_options.dart';
 import 'package:lectifaisubmission/entry_point_screen.dart';
 import 'package:lectifaisubmission/google_sign_in.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           fontFamily: "Touche",
+          textTheme: GoogleFonts.latoTextTheme(),
         ),
         home: const EntryPointScreen(),
       ),
