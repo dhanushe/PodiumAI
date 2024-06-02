@@ -696,13 +696,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       );
                     } else {
-                      return Container(
-                        margin: const EdgeInsets.only(left: 30),
-                        child: Text(
-                          "Create a new class or record a lecture to get started!",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      );
+                      return _placeholderWidget();
+                      // return Container(
+                      //   margin: const EdgeInsets.only(left: 30),
+                      //   child: Text(
+                      //     "Create a new class or record a lecture to get started!",
+                      //     style: TextStyle(color: Colors.white),
+                      //   ),
+                      // );
                     }
                   },
                 ),
