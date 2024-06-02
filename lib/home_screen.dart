@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lectifaisubmission/class.dart';
 import 'package:lectifaisubmission/class_card.dart';
 import 'package:lectifaisubmission/class_detail_screen.dart';
@@ -545,6 +547,37 @@ class _HomeScreenState extends State<HomeScreen> {
     return StreamBuilder(
       stream: transcriptsStream,
       builder: (context, snapshot) {
+        print('item count: ${(snapshot.data! as QuerySnapshot).docs.length}');
+        if ((snapshot.data! as QuerySnapshot).docs.length == 0) {
+          return Center(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              // nodata.svg is a placeholder image
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 50),
+                  SvgPicture.asset(
+                    'assets/nodata.svg',
+                    semanticsLabel: 'Recording Icon Logo',
+                    width: 200,
+                    height: 200,
+                  ),
+                  SizedBox(height: 20),
+                  FractionallySizedBox(
+                    widthFactor: 0.8,
+                    child: Text(
+                      "Create a new class or record a lecture to get started!",
+                      style: TextStyle(color: kPrimaryPurple, fontSize: 20),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
         return snapshot.hasData
             ? Expanded(
                 child: ListView.builder(
@@ -624,11 +657,32 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (_selectedSegment == 0 && transcriptsStream != null) {
                       var dataMap = data.data() as Map<String, dynamic>;
                       if (!dataMap.containsKey('title')) {
-                        return Container(
-                          child: Text(
-                            "No data",
-                            style: TextStyle(
-                              color: Colors.black,
+                        return Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            // nodata.svg is a placeholder image
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 50),
+                                SvgPicture.asset(
+                                  'assets/nodata.svg',
+                                  semanticsLabel: 'Recording Icon Logo',
+                                  width: 200,
+                                  height: 200,
+                                ),
+                                SizedBox(height: 20),
+                                FractionallySizedBox(
+                                  widthFactor: 0.8,
+                                  child: Text(
+                                    "Create a new class or record a lecture to get started!",
+                                    style: TextStyle(
+                                        color: kPrimaryPurple, fontSize: 20),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         );
@@ -662,10 +716,33 @@ class _HomeScreenState extends State<HomeScreen> {
                         transcriptsStream != null) {
                       var dataMap = data.data() as Map<String, dynamic>;
                       if (!dataMap.containsKey('className')) {
-                        return Container(
-                          child: Text(
-                            "No data",
-                            style: TextStyle(color: Colors.black),
+                        return Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            // nodata.svg is a placeholder image
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 50),
+                                SvgPicture.asset(
+                                  'assets/nodata.svg',
+                                  semanticsLabel: 'Recording Icon Logo',
+                                  width: 200,
+                                  height: 200,
+                                ),
+                                SizedBox(height: 20),
+                                FractionallySizedBox(
+                                  widthFactor: 0.8,
+                                  child: Text(
+                                    "Create a new class or record a lecture to get started!",
+                                    style: TextStyle(
+                                        color: kPrimaryPurple, fontSize: 20),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       }
@@ -711,9 +788,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               )
-            : Container(
-                child: Text("No data", style: TextStyle(color: Colors.white)),
+            : Center(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  // nodata.svg is a placeholder image
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 50),
+                      SvgPicture.asset(
+                        'assets/nodata.svg',
+                        semanticsLabel: 'Recording Icon Logo',
+                        width: 200,
+                        height: 200,
+                      ),
+                      SizedBox(height: 20),
+                      FractionallySizedBox(
+                        widthFactor: 0.8,
+                        child: Text(
+                          "Create a new class or record a lecture to get started!",
+                          style: TextStyle(color: kPrimaryPurple, fontSize: 20),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               );
+        // : Container(
+        //     child: Text("No data", style: TextStyle(color: Colors.white)),
+        //   );
       },
     );
   }
