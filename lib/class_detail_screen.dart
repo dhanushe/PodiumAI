@@ -208,6 +208,28 @@ class _ClassDetailScreenState extends State<ClassDetailScreen> {
                               leading: Icon(Icons.delete),
                               title: Text('Delete Class'),
                               onTap: () {
+                                if (!isTeacher) {
+                                  // Show an alert dialog
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text('Error'),
+                                        content: const Text(
+                                            'You do not have permission to delete this class.'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
                                 setState(() {
                                   databaseMethods
                                       .deleteClass("${widget.passedClass.ID}");
@@ -364,6 +386,7 @@ class _ClassDetailScreenState extends State<ClassDetailScreen> {
                               summary: data['summary'],
                               classCode: "${widget.passedClass.ID}",
                               className: widget.passedClass.name,
+                              teacherEmail: widget.passedClass.teacherEmail,
                             ),
                           ),
                         );

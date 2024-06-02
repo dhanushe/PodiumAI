@@ -27,6 +27,7 @@ class ClassLectureDetailScreen extends StatefulWidget {
   final String summary;
   final String classCode;
   final String className;
+  final String teacherEmail;
 
   ClassLectureDetailScreen({
     Key? key,
@@ -39,6 +40,7 @@ class ClassLectureDetailScreen extends StatefulWidget {
     required this.quizJSON,
     required this.summary,
     required this.className,
+    required this.teacherEmail,
   }) : super(key: key);
 
   @override
@@ -435,32 +437,40 @@ class _LectureDetailScreenState extends State<ClassLectureDetailScreen> {
                               leading: Icon(Icons.add),
                               title: Text('Create Quiz'),
                               onTap: () {
-                                // Create Quiz
-                                generateQuiz();
-                                if (!finishedQuizStringOutput) {
-                                  showLoaderDialog(BuildContext context) {
-                                    AlertDialog alert = AlertDialog(
-                                      content: new Row(
-                                        children: [
-                                          CircularProgressIndicator(),
-                                          Container(
-                                              margin: EdgeInsets.only(left: 7),
-                                              child: Text("Loading...")),
-                                        ],
-                                      ),
-                                    );
-                                    showDialog(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return alert;
-                                      },
-                                    );
-                                  }
+                                if (auth.currentUser!.email !=
+                                        widget.teacherEmail &&
+                                    !finishedQuizStringOutput) {
+                                  _showDialogToAskInstructor(context,
+                                      "Ask the instructor to generate a quiz for this lecture.");
+                                } else {
+                                  // Create Quiz
+                                  generateQuiz();
+                                  if (!finishedQuizStringOutput) {
+                                    showLoaderDialog(BuildContext context) {
+                                      AlertDialog alert = AlertDialog(
+                                        content: new Row(
+                                          children: [
+                                            CircularProgressIndicator(),
+                                            Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 7),
+                                                child: Text("Loading...")),
+                                          ],
+                                        ),
+                                      );
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return alert;
+                                        },
+                                      );
+                                    }
 
-                                  showLoaderDialog(context);
+                                    showLoaderDialog(context);
+                                  }
+                                  // generateQuiz();
                                 }
-                                // generateQuiz();
                               },
                             ),
                           ),
@@ -470,29 +480,39 @@ class _LectureDetailScreenState extends State<ClassLectureDetailScreen> {
                               leading: Icon(Icons.note_add),
                               title: Text('Create Notes'),
                               onTap: () {
-                                generateNotes();
-                                if (!finishedNotes) {
-                                  showLoaderDialog(BuildContext context) {
-                                    AlertDialog alert = AlertDialog(
-                                      content: new Row(
-                                        children: [
-                                          CircularProgressIndicator(),
-                                          Container(
-                                              margin: EdgeInsets.only(left: 7),
-                                              child: Text("Making Notes...")),
-                                        ],
-                                      ),
-                                    );
-                                    showDialog(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return alert;
-                                      },
-                                    );
-                                  }
+                                // Check if the user is the owner of the lecture
+                                if (auth.currentUser!.email !=
+                                        widget.teacherEmail &&
+                                    !finishedNotes) {
+                                  // Show a dialog that says ask instructor to generate notes
+                                  _showDialogToAskInstructor(context,
+                                      "Ask the instructor to generate notes for this lecture.");
+                                } else {
+                                  generateNotes();
+                                  if (!finishedNotes) {
+                                    showLoaderDialog(BuildContext context) {
+                                      AlertDialog alert = AlertDialog(
+                                        content: new Row(
+                                          children: [
+                                            CircularProgressIndicator(),
+                                            Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 7),
+                                                child: Text("Making Notes...")),
+                                          ],
+                                        ),
+                                      );
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return alert;
+                                        },
+                                      );
+                                    }
 
-                                  showLoaderDialog(context);
+                                    showLoaderDialog(context);
+                                  }
                                 }
                               },
                             ),
@@ -503,19 +523,24 @@ class _LectureDetailScreenState extends State<ClassLectureDetailScreen> {
                               leading: Icon(Icons.refresh),
                               title: Text('Recreate AI Content'),
                               onTap: () {
-                                // Recreate AI Content
-                                setState(() {
-                                  finishedkeywordsAIOutput = false;
-                                  finishedQuizStringOutput = false;
-                                  finishedSummary = false;
-                                  keywordsAIOutput = "";
-                                  summary = "";
-                                  quizStringOutput = "";
-                                  keywords = [];
-                                  notes = "";
-                                  generateSummary();
-                                  generateKeyWords();
-                                });
+                                if (auth.currentUser!.email !=
+                                    widget.teacherEmail) {
+                                  _showDialogToAskInstructor(context,
+                                      "Ask the instructor to recreate content for this lecture.");
+                                } else {
+                                  setState(() {
+                                    finishedkeywordsAIOutput = false;
+                                    finishedQuizStringOutput = false;
+                                    finishedSummary = false;
+                                    keywordsAIOutput = "";
+                                    summary = "";
+                                    quizStringOutput = "";
+                                    keywords = [];
+                                    notes = "";
+                                    generateSummary();
+                                    generateKeyWords();
+                                  });
+                                }
                               },
                             ),
                           ),
@@ -525,6 +550,12 @@ class _LectureDetailScreenState extends State<ClassLectureDetailScreen> {
                               leading: Icon(Icons.delete),
                               title: Text('Delete Lecture'),
                               onTap: () {
+                                if (auth.currentUser!.email !=
+                                    widget.teacherEmail) {
+                                  _showDialogToAskInstructor(context,
+                                      "You do not have permission to delete this lecture.");
+                                  return;
+                                }
                                 Navigator.pop(context);
                                 // Delete Lecture
                                 databaseMethods.deleteClassLecture(
@@ -868,6 +899,28 @@ class _LectureDetailScreenState extends State<ClassLectureDetailScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showDialogToAskInstructor(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Ask Instructor"),
+          content: Text(
+            message,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
