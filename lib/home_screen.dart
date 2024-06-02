@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feather_icons/feather_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ import 'package:lectifaisubmission/helper_functions.dart';
 import 'package:lectifaisubmission/lecture.dart';
 import 'package:lectifaisubmission/lecture_card.dart';
 import 'package:lectifaisubmission/lecture_detail_screen.dart';
+import 'package:lectifaisubmission/settings.dart';
 import 'package:lectifaisubmission/speech_api.dart';
 import 'package:lectifaisubmission/speech_recognition_sheet.dart';
 import 'package:provider/provider.dart';
@@ -258,19 +260,29 @@ class _HomeScreenState extends State<HomeScreen> {
                           'Would you like to join a class or record a lecture?'),
                       actions: [
                         TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.pop(context);
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return SpeechRecognitionSheet(
-                                  lectureForClass: false,
-                                  onComplete: () {
-                                    getUserTranscripts(isStudent);
-                                  },
-                                );
-                              },
-                            );
+                            // Get User Language
+                            await databaseMethods
+                                .getUserLanguage(
+                                    firebaseAuth.currentUser!.email!)
+                                .then((value) {
+                              if (value == null) {
+                                value = 'English (United States)';
+                              }
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return SpeechRecognitionSheet(
+                                    lectureForClass: false,
+                                    userLanguage: value,
+                                    onComplete: () {
+                                      getUserTranscripts(isStudent);
+                                    },
+                                  );
+                                },
+                              );
+                            });
                           },
                           child: Text('Record a lecture'),
                         ),
@@ -444,20 +456,40 @@ class _HomeScreenState extends State<HomeScreen> {
             Positioned(
               top: 10.0, // Adjust these values for desired position
               right: 10.0,
-              child: IconButton(
-                color: kPrimaryLight,
-                icon: Icon(Icons.logout),
-                onPressed: () {
-                  var provider =
-                      Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.logout();
+              child: Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.end, // Align the row to the right
+                children: [
+                  IconButton(
+                    color: kPrimaryLight,
+                    icon: Icon(
+                        FeatherIcons.settings), // Icon for the settings button
+                    onPressed: () {
+                      // Navigate to the settings screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SettingsScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    color: kPrimaryLight,
+                    icon: Icon(FeatherIcons.logOut),
+                    onPressed: () {
+                      var provider = Provider.of<GoogleSignInProvider>(context,
+                          listen: false);
+                      provider.logout();
 
-                  HelperFunctions.saveUserLoggedIn(false);
-                  HelperFunctions.saveUserEmail('');
-                  HelperFunctions.saveUserName('');
-                },
+                      HelperFunctions.saveUserLoggedIn(false);
+                      HelperFunctions.saveUserEmail('');
+                      HelperFunctions.saveUserName('');
+                    },
+                  ),
+                ],
               ),
-            ),
+            )
           ],
         ),
       ),

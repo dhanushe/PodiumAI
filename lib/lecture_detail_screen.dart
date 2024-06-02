@@ -47,7 +47,7 @@ class _LectureDetailScreenState extends State<LectureDetailScreen> {
 
   // Generate Summary from Text
   generateSummary() async {
-    print("generating summary");
+    print("generating summary of: ${this.widget.lecture.fullTranscription}");
     final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
     final content = [
       Content.text(

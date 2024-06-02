@@ -124,16 +124,38 @@ class _ClassDetailScreenState extends State<ClassDetailScreen> {
       backgroundColor: kPrimaryDark,
       floatingActionButton: isTeacher && _selectedSegment == 0
           ? FloatingActionButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return SpeechRecognitionSheet(
-                      lectureForClass: true,
-                      classCode: "${widget.passedClass.ID}",
-                    );
-                  },
-                );
+              // onPressed: () {
+              //   showModalBottomSheet(
+              //     context: context,
+              //     builder: (context) {
+              //       return SpeechRecognitionSheet(
+              //         lectureForClass: true,
+              //         classCode: "${widget.passedClass.ID}",
+              //       );
+              //     },
+              //   );
+              // },
+              onPressed: () async {
+                // Navigator.pop(context);
+                // Get User Language
+                await databaseMethods
+                    .getUserLanguage(firebaseAuth.currentUser!.email!)
+                    .then((value) {
+                  print('User language is $value');
+                  if (value == null) {
+                    value = 'English (United States)';
+                  }
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return SpeechRecognitionSheet(
+                        lectureForClass: true,
+                        userLanguage: value,
+                        classCode: "${widget.passedClass.ID}",
+                      );
+                    },
+                  );
+                });
               },
               child: const Icon(Icons.mic),
             )

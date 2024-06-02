@@ -39,6 +39,23 @@ class DatabaseMethods {
     }
   }
 
+  updateUserLanguage(String email, String language) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(email)
+        .set({'language': language}, SetOptions(merge: true));
+  }
+
+  getUserLanguage(String email) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(email)
+        .get()
+        .then((value) {
+      return value.data()!['language'];
+    });
+  }
+
   // uploadUserInfo(userMap) async {
   //   await FirebaseFirestore.instance.collection('users').get().then((value) {
   //     value.docs.forEach((element) {

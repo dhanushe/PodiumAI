@@ -11,7 +11,8 @@ class Constants {
   static String myName = '';
 }
 
-final apiKey = "AIzaSyDPISavCG_7dSteajrni9M_JedFSWxU6Vk";
+// final apiKey = "AIzaSyDPISavCG_7dSteajrni9M_JedFSWxU6Vk";
+final apiKey = "AIzaSyBvilE2nc4lEfoyAdOjr-wYJphM_9PTx0w";
 
 // prompts to gemini
 const createQuizPrompt = """

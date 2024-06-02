@@ -11,12 +11,14 @@ class SpeechRecognitionSheet extends StatefulWidget {
   final bool lectureForClass;
   String? classCode;
   final VoidCallback? onComplete;
+  final String userLanguage;
 
   SpeechRecognitionSheet({
     Key? key,
     required this.lectureForClass,
     this.classCode,
     this.onComplete,
+    required this.userLanguage,
   }) : super(key: key);
 
   @override
@@ -41,6 +43,7 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
   void initState() {
     super.initState();
     _initSpeech();
+    print("User Language: ${widget.userLanguage}");
   }
 
   void _initSpeech() async {
@@ -52,7 +55,33 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
   }
 
   void _startListening() async {
-    await _speechToText.listen(onResult: _onSpeechResult);
+    var locales = await _speechToText.locales();
+
+    String localeID = '';
+
+    print(widget.userLanguage + " is the user language");
+
+    // print the list of available locales
+    for (var locale in locales) {
+      if (locale.name == widget.userLanguage) {
+        localeID = locale.localeId;
+        print(localeID);
+        break;
+      }
+    }
+
+    // Some UI or other code to select a locale from the list
+    // resulting in an index, selectedLocale
+
+    // var selectedLocale = locales[selectedLocale];
+    // _speechToText.listen(
+    //   onResult: resultListener,
+    //   localeId: selectedLocale.localeId,
+    // );
+    await _speechToText.listen(
+      onResult: _onSpeechResult,
+      localeId: localeID,
+    );
     setState(() {
       _isListening = true;
     });
@@ -103,6 +132,7 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
     String userName = firebaseAuth.currentUser!.displayName!;
     String userEmail = firebaseAuth.currentUser!.email!;
     if (widget.lectureForClass) {
+      print("Uploading transcription to Firebase within Class");
       await databaseMethods
           .uploadTranscriptionForClass(
         _lastWords,
@@ -182,18 +212,6 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
                 style: TextStyle(color: kPrimaryLight, fontSize: 16),
               ),
             ),
-            // Close button
-            Container(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: Icon(Icons.close, color: kPrimaryLight),
-                onPressed: () {
-                  _stopListening();
-                  resetValues();
-                  Navigator.pop(context);
-                },
-              ),
-            ),
 
             // Add lecture button
             ElevatedButton.icon(
@@ -238,16 +256,47 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
                 _isListening ? Icons.pause : Icons.mic,
                 color: kPrimaryLight,
               ),
-              label: Text(
-                _isListening ? 'Pause Transcription' : 'Start Recording',
-                style: TextStyle(
-                  color: kPrimaryLight,
-                  fontWeight: FontWeight.bold,
-                ),
+              label: Column(
+                children: [
+                  Text(
+                    _isListening ? 'Pause Transcription' : 'Start Recording',
+                    style: TextStyle(
+                      color: kPrimaryLight,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  // language
+                  Text(
+                    widget.userLanguage,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: kPrimaryLight,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
               onPressed: _isListening ? _stopListening : _startListening,
               style: ElevatedButton.styleFrom(
                 backgroundColor: kPrimaryGray,
+              ),
+            ),
+
+            // Close button
+            ElevatedButton(
+              onPressed: () {
+                _stopListening();
+                resetValues();
+                Navigator.pop(context);
+              },
+              child: Text("Cancel Recording",
+                  style: TextStyle(color: kPrimaryGray)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.amberAccent,
+                // border radius
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
             ),
 
