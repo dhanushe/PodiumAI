@@ -547,37 +547,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return StreamBuilder(
       stream: transcriptsStream,
       builder: (context, snapshot) {
-        print('item count: ${(snapshot.data! as QuerySnapshot).docs.length}');
-        if ((snapshot.data! as QuerySnapshot).docs.length == 0) {
-          return Center(
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              // nodata.svg is a placeholder image
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 50),
-                  SvgPicture.asset(
-                    'assets/nodata.svg',
-                    semanticsLabel: 'Recording Icon Logo',
-                    width: 200,
-                    height: 200,
-                  ),
-                  SizedBox(height: 20),
-                  FractionallySizedBox(
-                    widthFactor: 0.8,
-                    child: Text(
-                      "Create a new class or record a lecture to get started!",
-                      style: TextStyle(color: kPrimaryPurple, fontSize: 20),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
+        if (snapshot.hasData) {
+          if ((snapshot.data! as QuerySnapshot).docs.length == 0) {
+            return _placeholderWidget();
+          }
         }
+
         return snapshot.hasData
             ? Expanded(
                 child: ListView.builder(
@@ -657,35 +632,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (_selectedSegment == 0 && transcriptsStream != null) {
                       var dataMap = data.data() as Map<String, dynamic>;
                       if (!dataMap.containsKey('title')) {
-                        return Center(
-                          child: Container(
-                            padding: const EdgeInsets.all(16),
-                            // nodata.svg is a placeholder image
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 50),
-                                SvgPicture.asset(
-                                  'assets/nodata.svg',
-                                  semanticsLabel: 'Recording Icon Logo',
-                                  width: 200,
-                                  height: 200,
-                                ),
-                                SizedBox(height: 20),
-                                FractionallySizedBox(
-                                  widthFactor: 0.8,
-                                  child: Text(
-                                    "Create a new class or record a lecture to get started!",
-                                    style: TextStyle(
-                                        color: kPrimaryPurple, fontSize: 20),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        return _placeholderWidget();
                       }
                       return GestureDetector(
                         child: LectureCard(
@@ -716,35 +663,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         transcriptsStream != null) {
                       var dataMap = data.data() as Map<String, dynamic>;
                       if (!dataMap.containsKey('className')) {
-                        return Center(
-                          child: Container(
-                            padding: const EdgeInsets.all(16),
-                            // nodata.svg is a placeholder image
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 50),
-                                SvgPicture.asset(
-                                  'assets/nodata.svg',
-                                  semanticsLabel: 'Recording Icon Logo',
-                                  width: 200,
-                                  height: 200,
-                                ),
-                                SizedBox(height: 20),
-                                FractionallySizedBox(
-                                  widthFactor: 0.8,
-                                  child: Text(
-                                    "Create a new class or record a lecture to get started!",
-                                    style: TextStyle(
-                                        color: kPrimaryPurple, fontSize: 20),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        return _placeholderWidget();
                       }
                       return GestureDetector(
                         child: ClassCard(
@@ -788,38 +707,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               )
-            : Center(
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  // nodata.svg is a placeholder image
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 50),
-                      SvgPicture.asset(
-                        'assets/nodata.svg',
-                        semanticsLabel: 'Recording Icon Logo',
-                        width: 200,
-                        height: 200,
-                      ),
-                      SizedBox(height: 20),
-                      FractionallySizedBox(
-                        widthFactor: 0.8,
-                        child: Text(
-                          "Create a new class or record a lecture to get started!",
-                          style: TextStyle(color: kPrimaryPurple, fontSize: 20),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
+            : _placeholderWidget();
         // : Container(
         //     child: Text("No data", style: TextStyle(color: Colors.white)),
         //   );
       },
+    );
+  }
+
+  Center _placeholderWidget() {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        // nodata.svg is a placeholder image
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 50),
+            SvgPicture.asset(
+              'assets/nodata.svg',
+              semanticsLabel: 'Recording Icon Logo',
+              width: 200,
+              height: 200,
+            ),
+            SizedBox(height: 20),
+            FractionallySizedBox(
+              widthFactor: 0.8,
+              child: Text(
+                "Create a new class or record a lecture to get started!",
+                style: TextStyle(color: kPrimaryPurple, fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
