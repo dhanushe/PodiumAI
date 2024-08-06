@@ -1,12 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lectifaisubmission/default_firebase_options.dart';
 import 'package:lectifaisubmission/entry_point_screen.dart';
 import 'package:lectifaisubmission/google_sign_in.dart';
 import 'package:lectifaisubmission/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
+import 'firebase_options.dart';
 
 // educatorteacher!
 // schoolteachereducator@gmail.com
@@ -19,15 +20,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) {
-    // App is Running on Web
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.web,
-    );
-  } else {
-    // App is Running on Mobile
-    await Firebase.initializeApp();
-  }
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 

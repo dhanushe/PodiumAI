@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "294198838372-hurk0n2praccgpb87djc03cmp6k3rg2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dhanushe.lectifai",
+            "certificate_hash": "1c1b644f942496f7e082f36eb86c319f261a2463"
+          }
+        },
+        {
+          "client_id": "294198838372-t16efmgfhgv7btkcoc4unsr2lrrd54lf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dhanushe.lectifai",
+            "certificate_hash": "3e7b91a6541be79c8c766c6feeadc888c2217cb0"
+          }
+        },
+        {
           "client_id": "294198838372-a56b686tnro6m7rd8b1gklr6e4drebta.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +45,13 @@
             {
               "client_id": "294198838372-a56b686tnro6m7rd8b1gklr6e4drebta.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "294198838372-8vfs87s60bcuaoeetsf8fggctukhmtsk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dhanushe.lectifai"
+              }
             }
           ]
         }

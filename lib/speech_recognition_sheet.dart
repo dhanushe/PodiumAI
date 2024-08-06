@@ -29,6 +29,7 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
   final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = ''; // Initialize as empty string
+  String words = '';
   bool _isListening = false; // Track listening state
   DatabaseMethods databaseMethods = new DatabaseMethods();
 
@@ -49,6 +50,7 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
   void _initSpeech() async {
     _speechEnabled = await _speechToText.initialize();
     _lastWords = '';
+    words = '';
     _speechEnabled = false;
     _isListening = false;
     setState(() {});
@@ -93,12 +95,17 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
     _stopTimer(); // Stop the timer when recording stops
     setState(() {
       _isListening = false;
+      words = words + _lastWords;
     });
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = result.recognizedWords;
+      if (result.finalResult) {
+        words = '$words $_lastWords';
+        _lastWords = '';
+      }
     });
   }
 
@@ -241,7 +248,8 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
                 // Always scroll to the bottom
                 reverse: true,
                 child: Text(
-                  _lastWords, // Display the last recognized words
+                  // _lastWords, // Display the last recognized words
+                  words + _lastWords,
                   style: TextStyle(
                     color: kPrimaryLight,
                     fontSize: 16,

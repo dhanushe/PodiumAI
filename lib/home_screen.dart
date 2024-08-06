@@ -302,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Show a popup asking to join a class or record a lecture
                 showDialog(
                   context: context,
-                  builder: (BuildContext context) {
+                  builder: (BuildContext ctx) {
                     return AlertDialog(
                       title: Text('Choose an option'),
                       content: Text(
@@ -310,15 +310,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       actions: [
                         TextButton(
                           onPressed: () async {
-                            Navigator.pop(context);
+                            Navigator.pop(ctx);
                             // Get User Language
                             await databaseMethods
                                 .getUserLanguage(
                                     firebaseAuth.currentUser!.email!)
                                 .then((value) {
-                              if (value == null) {
-                                value = 'English (United States)';
-                              }
+                              value ??= 'English (United States)';
                               showModalBottomSheet(
                                 context: context,
                                 builder: (context) {

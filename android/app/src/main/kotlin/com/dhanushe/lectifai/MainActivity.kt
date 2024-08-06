@@ -1,4 +1,4 @@
-package com.example.lectifaisubmission
+package com.dhanushe.lectifai
 
 import io.flutter.embedding.android.FlutterActivity
 

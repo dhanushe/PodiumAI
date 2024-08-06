@@ -90,33 +90,33 @@ class _NotesScreenState extends State<NotesScreen> {
                           .textTheme
                           .bodyMedium
                           ?.copyWith(fontSize: 16.0, color: kPrimaryLight),
-                      h1: Theme.of(context).textTheme.headline4?.copyWith(
+                      h1: Theme.of(context).textTheme.headlineLarge?.copyWith(
                             color: kPrimaryGreen,
                             fontWeight: FontWeight.bold,
                           ),
-                      h2: Theme.of(context).textTheme.headline5?.copyWith(
+                      h2: Theme.of(context).textTheme.headlineMedium?.copyWith(
                             color: kPrimaryGreen,
                           ),
-                      h3: Theme.of(context).textTheme.headline6?.copyWith(
+                      h3: Theme.of(context).textTheme.headlineMedium?.copyWith(
                             color: kPrimaryPurple,
                             fontStyle: FontStyle.italic,
                           ),
-                      em: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      em: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             color: kPrimaryPurple,
                             fontStyle: FontStyle.italic,
                           ),
-                      strong: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      strong: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             color: kPrimaryPurple,
                             fontWeight: FontWeight.bold,
                           ),
                       blockquote:
-                          Theme.of(context).textTheme.bodyText1?.copyWith(
+                          Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Colors.grey[600],
                                 fontStyle: FontStyle.italic,
                               ),
                       // bullet
                       listBullet:
-                          Theme.of(context).textTheme.bodyText1?.copyWith(
+                          Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: kPrimaryPurple,
                               ),
                       // ordered list

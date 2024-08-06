@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clay_containers/clay_containers.dart';
 import 'package:clay_containers/widgets/clay_animated_container.dart';
 import 'package:feather_icons/feather_icons.dart';
@@ -218,43 +220,89 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 16),
               // Rounded Next Button kPrimaryPurple
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  final provider =
-                      Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.googleLogin(context);
-                },
-                child: ClayAnimatedContainer(
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  color: kPrimaryDark,
-                  emboss: false,
-                  borderRadius: 50,
-                  depth: this.depth,
-                  spread: this.spread,
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          MdiIcons.google,
-                          color: kPrimaryLight,
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                      final provider = Provider.of<GoogleSignInProvider>(
+                          context,
+                          listen: false);
+                      provider.googleLogin(context);
+                    },
+                    child: ClayAnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      color: kPrimaryDark,
+                      emboss: false,
+                      borderRadius: 50,
+                      depth: this.depth,
+                      spread: this.spread,
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              MdiIcons.google,
+                              color: kPrimaryLight,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              'Login',
+                              style: TextStyle(
+                                color: kPrimaryLight,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Login',
-                          style: TextStyle(
-                            color: kPrimaryLight,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  SizedBox(width: 20),
+                  if (Platform.isIOS)
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                        final provider = Provider.of<GoogleSignInProvider>(
+                            context,
+                            listen: false);
+                        provider.appleLogin(context);
+                      },
+                      child: ClayAnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        color: kPrimaryDark,
+                        emboss: false,
+                        borderRadius: 50,
+                        depth: this.depth,
+                        spread: this.spread,
+                        child: Container(
+                          padding: EdgeInsets.all(20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                MdiIcons.apple,
+                                color: kPrimaryLight,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Login',
+                                style: TextStyle(
+                                  color: kPrimaryLight,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ],
           ),
