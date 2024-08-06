@@ -36,20 +36,24 @@ class GoogleSignInProvider extends ChangeNotifier {
 
   //Apple Sign In
   Future<void> appleLogin(BuildContext context) async {
-    final appleProvider = AppleAuthProvider();
-    await FirebaseAuth.instance.signInWithProvider(appleProvider);
-    // final appleCredential = await SignInWithApple.getAppleIDCredential(
-    //   scopes: [
-    //     AppleIDAuthorizationScopes.email,
-    //     AppleIDAuthorizationScopes.fullName,
-    //   ],
-    // );
-    // final oAuthProvider = OAuthProvider("apple.com");
-    // final credential = oAuthProvider.credential(
-    //   idToken: appleCredential.identityToken,
-    //   accessToken: appleCredential.authorizationCode,
-    // );
-    // await FirebaseAuth.instance.signInWithCredential(credential);
+    try {
+      final appleProvider = AppleAuthProvider();
+      await FirebaseAuth.instance.signInWithProvider(appleProvider);
+      // final appleCredential = await SignInWithApple.getAppleIDCredential(
+      //   scopes: [
+      //     AppleIDAuthorizationScopes.email,
+      //     AppleIDAuthorizationScopes.fullName,
+      //   ],
+      // );
+      // final oAuthProvider = OAuthProvider("apple.com");
+      // final credential = oAuthProvider.credential(
+      //   idToken: appleCredential.identityToken,
+      //   accessToken: appleCredential.authorizationCode,
+      // );
+      // await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      print(e);
+    }
   }
 
   void _onBirthdayValidated(AuthCredential credential) async {
