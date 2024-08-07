@@ -38,6 +38,9 @@ class GoogleSignInProvider extends ChangeNotifier {
   Future<void> appleLogin(BuildContext context) async {
     try {
       final appleProvider = AppleAuthProvider();
+      appleProvider.addScope('email');
+      appleProvider.addScope('fullName');
+      print("appleProvider: ${appleProvider.scopes}");
       await FirebaseAuth.instance.signInWithProvider(appleProvider);
       // final appleCredential = await SignInWithApple.getAppleIDCredential(
       //   scopes: [
