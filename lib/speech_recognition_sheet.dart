@@ -112,10 +112,13 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
   // Generate Summary from Text
   generateTranscriptionTitle() async {
     print("generating summary");
+    String totalText = words + _lastWords;
+    print("Total Text: $totalText");
+    // return;
     final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
     final content = [
       Content.text(
-          'Give me a title based on the contents of this transcription. Try to keep it short and sweet.\n\nTranscription:\n$_lastWords\n\nTitle (respond with only the title): '),
+          'Give me a title based on the contents of this transcription. Try to keep it short and sweet.\n\nTranscription:\n$totalText\n\nTitle (respond with only the title): '),
     ];
     // final response = await model.generateContent(content);
     final response = model.generateContentStream(content).listen(
@@ -142,7 +145,7 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
       print("Uploading transcription to Firebase within Class");
       await databaseMethods
           .uploadTranscriptionForClass(
-        _lastWords,
+        words + _lastWords,
         userName,
         userEmail,
         this.transcriptionTitle,
@@ -162,7 +165,7 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
     } else {
       await databaseMethods
           .uploadTranscription(
-        _lastWords,
+        words + _lastWords,
         userName,
         userEmail,
         this.transcriptionTitle,
@@ -182,6 +185,7 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
 
   void resetValues() {
     _lastWords = '';
+    words = '';
     _speechEnabled = false;
     _isListening = false;
     _duration = 0.0;

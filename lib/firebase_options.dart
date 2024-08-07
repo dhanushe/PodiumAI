@@ -24,10 +24,7 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -52,14 +49,24 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyCUeapO18K65xp8Q_7jAuIYK7y9YfDE0qo',
+    appId: '1:294198838372:android:56e0d9d3f37b847e9b0b71',
+    messagingSenderId: '294198838372',
+    projectId: 'lectfai',
+    storageBucket: 'lectfai.appspot.com',
+  );
+
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDBuTuaFOQjUlNmyi_pp4eiQFPGGzQx9OQ',
     appId: '1:294198838372:ios:65589fb9c78d1f959b0b71',
     messagingSenderId: '294198838372',
     projectId: 'lectfai',
     storageBucket: 'lectfai.appspot.com',
-    androidClientId: '294198838372-hurk0n2praccgpb87djc03cmp6k3rg2c.apps.googleusercontent.com',
-    iosClientId: '294198838372-4hvtbcven1a8uqs5m02vmrverjvoj7eg.apps.googleusercontent.com',
+    androidClientId:
+        '294198838372-hurk0n2praccgpb87djc03cmp6k3rg2c.apps.googleusercontent.com',
+    iosClientId:
+        '294198838372-4hvtbcven1a8uqs5m02vmrverjvoj7eg.apps.googleusercontent.com',
     iosBundleId: 'com.dhanushe.podium',
   );
 }
