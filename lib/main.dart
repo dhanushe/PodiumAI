@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
       create: (context) => GoogleSignInProvider(),
       child: MaterialApp(
         title: 'LectifAI',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
