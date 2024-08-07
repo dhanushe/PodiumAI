@@ -31,11 +31,11 @@ class _EntryPointScreenState extends State<EntryPointScreen> {
             HelperFunctions.saveUserLoggedIn(true);
             HelperFunctions.saveUserEmail(firebaseAuth.currentUser!.email!);
             HelperFunctions.saveUserName(
-                firebaseAuth.currentUser!.displayName!);
-            Constants.myName = firebaseAuth.currentUser!.displayName!;
+                firebaseAuth.currentUser!.displayName ?? '');
+            Constants.myName = firebaseAuth.currentUser!.displayName ?? '';
             uploadUserInfo({
               'email': firebaseAuth.currentUser!.email,
-              'name': firebaseAuth.currentUser!.displayName,
+              'name': firebaseAuth.currentUser!.displayName ?? '',
               'isStudent': '',
             });
           } else if (snapshot.hasError) {

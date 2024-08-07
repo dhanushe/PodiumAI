@@ -440,7 +440,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   margin: const EdgeInsets.only(left: 30),
                   child: Text(
-                    firebaseAuth.currentUser!.displayName!,
+                    firebaseAuth.currentUser!.displayName ?? '',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

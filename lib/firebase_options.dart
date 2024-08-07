@@ -17,11 +17,17 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -46,31 +52,14 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyALsOIlKAwYTivmAWOxWqlhgp1PyGhO0Zg',
-    appId: '1:294198838372:web:f595fceafdfd322f9b0b71',
-    messagingSenderId: '294198838372',
-    projectId: 'lectfai',
-    authDomain: 'lectfai.firebaseapp.com',
-    storageBucket: 'lectfai.appspot.com',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCUeapO18K65xp8Q_7jAuIYK7y9YfDE0qo',
-    appId: '1:294198838372:android:56e0d9d3f37b847e9b0b71',
-    messagingSenderId: '294198838372',
-    projectId: 'lectfai',
-    storageBucket: 'lectfai.appspot.com',
-  );
-
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDBuTuaFOQjUlNmyi_pp4eiQFPGGzQx9OQ',
-    appId: '1:294198838372:ios:62e3c0c7d83a65c69b0b71',
+    appId: '1:294198838372:ios:65589fb9c78d1f959b0b71',
     messagingSenderId: '294198838372',
     projectId: 'lectfai',
     storageBucket: 'lectfai.appspot.com',
     androidClientId: '294198838372-hurk0n2praccgpb87djc03cmp6k3rg2c.apps.googleusercontent.com',
-    iosClientId: '294198838372-8vfs87s60bcuaoeetsf8fggctukhmtsk.apps.googleusercontent.com',
-    iosBundleId: 'com.dhanushe.lectifai',
+    iosClientId: '294198838372-4hvtbcven1a8uqs5m02vmrverjvoj7eg.apps.googleusercontent.com',
+    iosBundleId: 'com.dhanushe.podium',
   );
 }
