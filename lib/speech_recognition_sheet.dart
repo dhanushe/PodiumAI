@@ -48,7 +48,9 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
   }
 
   void _initSpeech() async {
-    _speechEnabled = await _speechToText.initialize();
+    _speechEnabled = await _speechToText.initialize(
+      finalTimeout: Duration(seconds: 3),
+    );
     _lastWords = '';
     words = '';
     _speechEnabled = false;
@@ -83,6 +85,7 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
     await _speechToText.listen(
       onResult: _onSpeechResult,
       localeId: localeID,
+      listenOptions: SpeechListenOptions(listenMode: ListenMode.dictation),
     );
     setState(() {
       _isListening = true;
@@ -102,6 +105,7 @@ class _SpeechRecognitionSheetState extends State<SpeechRecognitionSheet> {
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = result.recognizedWords;
+      print("Is Final Result ${result.finalResult}");
       if (result.finalResult) {
         words = '$words $_lastWords';
         _lastWords = '';
