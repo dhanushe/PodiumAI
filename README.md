@@ -1,6 +1,6 @@
-# lectifaisubmission
+# PodiumAI
 
-A new Flutter project.
+Published on the app store. 100+ users. Built by Dhanush Eashwar.
 
 ## Getting Started
 
